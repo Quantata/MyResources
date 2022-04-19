@@ -8,8 +8,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        BasicDataType.result()
-//        BasicFunction.result()
-        BasicRangeClass.result()
+        BasicDataType.result()
+        BasicFunction.result()
+        BasicControlClass.result()
+        BasicCollection.result()
     }
 }
