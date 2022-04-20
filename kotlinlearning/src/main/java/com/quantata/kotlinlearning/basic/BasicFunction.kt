@@ -1,4 +1,4 @@
-package com.quantata.kotlinlearning
+package com.quantata.kotlinlearning.basic
 
 class BasicFunction {
     companion object {

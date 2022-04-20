@@ -1,9 +1,9 @@
-package com.quantata.kotlinlearning
+package com.quantata.kotlinlearning.basic
 
 import android.os.Build
 
 class BasicCollection {
-    companion object {
+    companion object { // object 키워드로 만들어진 객체는 여러 번 호출되더라도 딱 하나의 객체만 생성되어 재사용
         fun result() {
             listFunc()
             setFunc()
