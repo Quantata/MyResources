@@ -5,6 +5,11 @@
       <map>
         <entry key="kotlinlearning/src/main/res/layout/activity_basic.xml" value="0.2625" />
         <entry key="kotlinlearning/src/main/res/layout/activity_main.xml" value="0.2625" />
+        <entry key="kotlinlearning/src/main/res/layout/activity_two_color.xml" value="0.2625" />
+        <entry key="kotlinlearning/src/main/res/layout/fragment_blue.xml" value="0.2625" />
+        <entry key="kotlinlearning/src/main/res/layout/fragment_red.xml" value="0.2625" />
+        <entry key="learningviews/src/main/res/layout/activity_main.xml" value="0.2484375" />
+        <entry key="learningviews/src/main/res/layout/activity_main2.xml" value="0.2625" />
       </map>
     </option>
   </component>

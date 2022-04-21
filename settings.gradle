@@ -1,3 +1,4 @@
 rootProject.name = "MyResources"
 include ':app'
 include ':kotlinlearning'
+include ':learningviews'
