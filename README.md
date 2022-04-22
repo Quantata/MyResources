@@ -6,7 +6,7 @@
 
 ### fragment(2022.04.21 update)
 - using Fragment
-- using viewBinding
+- using viewBinding in Jetpack
   + warning : using viewBinding in Fragment
 
 ## Learning Views(2022.04.21 update)
@@ -19,8 +19,14 @@
   + Backgroud Thread
 - using constraintLayout
   + chain
-- using dataBinding
+- using dataBinding in Jetpack
 
 ## Simple Music Player
 - using MediaPlayer API
 - using Service
+  + Foreground Service
+  + notification
+
+## QR Code Reader
+- using CameraX in Jetpack
+- using Google ML Library
