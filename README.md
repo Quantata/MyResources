@@ -19,5 +19,4 @@
   + Backgroud Thread
 - using constraintLayout
   + chain
-- using viewBinding
 - using dataBinding
