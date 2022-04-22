@@ -59,7 +59,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btn_refresh" />
+            app:layout_constraintStart_toEndOf="@+id/btn_refresh"
+            android:onClick="@{(v) -> main.onClick(v)}"/>
 
         <Button
             android:id="@+id/btn_refresh"
@@ -70,7 +71,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@+id/btn_start"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="@{(v) -> main.onClick(v)}"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -3,6 +3,7 @@ package com.quantata.stopwatch
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.quantata.stopwatch.databinding.ActivityMainBinding
 
@@ -16,8 +17,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener { // 클릭 이�
 
     }
 
-    override fun onClick(p0: View?) {
-        TODO("Not yet implemented")
+    override fun onClick(v: View?) {
+        when(v?.id) {
+            R.id.btn_start -> {
+                Toast.makeText(this, "g2", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
 
