@@ -66,13 +66,13 @@ class MusicPlayerService : Service() {
             notificationManager.createNotificationChannel(mChannel)
 
             // 알림 생성
-            val notifiction: Notification = Notification.Builder(this, "CHANNEL_ID")
+            val notification: Notification = Notification.Builder(this, "CHANNEL_ID")
                 .setSmallIcon(R.drawable.ic_play)   // 알림 아이콘
                 .setContentTitle("뮤직 플레이어 앱")    // 알림의 제목 설정
                 .setContentText("앱이 실행 중입니다.")   // 알림의 내용 설정
                 .build()
 
-            startForeground(1, notifiction) // 임수로 알림 ID 와 알림 지정 = (일림의 식별자, 보여줄 알림)
+            startForeground(1, notification) // 임수로 알림 ID 와 알림 지정 = (일림의 식별자, 보여줄 알림)
         }
     }
 
@@ -112,6 +112,10 @@ class MusicPlayerService : Service() {
     fun stop() {
         mMediaPlayer?.let {
             if (it.isPlaying) {
+                it.stop() // 음악을 멈춤
+                it.release() // 미디어 플레이어에 할당된 자원을 해제
+                mMediaPlayer = null
+            } else { // 일시 정지상태인 경우
                 it.stop() // 음악을 멈춤
                 it.release() // 미디어 플레이어에 할당된 자원을 해제
                 mMediaPlayer = null
