@@ -15,6 +15,10 @@ import com.quantata.simplemusicplayer.R
 class MusicPlayerService : Service() {
 
     var mMediaPlayer: MediaPlayer? = null // 미디어 플레이어 객체를 null 로 초기화
+    /*
+     * MusicPlayerBinder() 는 안에 getService() 함수를 가지고 있으며 반환값으로 현재 서비스를 반환
+     * 서비스와 연결하려는 Activity 와 같은 구성요소에 현재 서비스를 반환함으로써 연결된 구성요소가 서비스의 함수를 사용할 수 있게 함.
+     */
     var mBinder: MusicPlayerBinder = MusicPlayerBinder()
 
     inner class MusicPlayerBinder : Binder() { // 바인더를 반환해 서비스 함수를 사용할 수 있게 함.
@@ -25,14 +29,18 @@ class MusicPlayerService : Service() {
 
     override fun onCreate() { // 서비스가 생성될 때, 딱 한번만 실행
         super.onCreate()
-        startForegroundService() // 포그라운드 서비스 시작
+        startForegroundService() // 포그라운드 서비스 시작 // 상태 표시줄에 앱이 실행되고 있다는 알림을 생성하는 startForegroundService() 실행
     }
+
+    // bindService() 함수를 호출할 때 실행되는 함수.
+    // 여기서 서비스와 구성요소를 이어주는 매개체 역할을 하는 IBinder 반환
+    // 만약 Bind 가 필요 없는 서비스(ex. 시작된 서비스)라면 null 반환
     override fun onBind(intent: Intent): IBinder {
         return mBinder // 바인더 반환
     }
 
-    // startService() 를 호출하면 실행되는 콜백 함수
-    // 시작된 상태 & 백그라운드
+    // startService() 나 startForegroundService() 를 호출하면 실행되는 콜백 함수
+    // 시작된 상태 & 백그라운드에서 계속 존재
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 //        return super.onStartCommand(intent, flags, startId)
         return START_STICKY
@@ -45,16 +53,18 @@ class MusicPlayerService : Service() {
     }
 
     // 서비스 종료
+    // onCreate() 에서 상태 표시줄에 보여주었던 알림 해제
     override fun onDestroy() {
         super.onDestroy()
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            stopForeground(true)
+            stopForeground(true) // ForegroundService 멈춤
         }
     }
 
+    // 상태 표시줄에 앱이 실행되고 있다는 알림을 생성하는 startForegroundService() 실행
     // 알림 채널을 만들고 startForeground() 함수 실행.
     // API Level 26 버전부터는 반드시 startService 가 아닌 startForegroundService() 를 실행하여 사용자로 하여금 서비스가 실행되고 있다는 사실을 알려줘야 함.
-    fun startForegroundService() {
+    private fun startForegroundService() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             val mChannel =
@@ -72,7 +82,7 @@ class MusicPlayerService : Service() {
                 .setContentText("앱이 실행 중입니다.")   // 알림의 내용 설정
                 .build()
 
-            startForeground(1, notification) // 임수로 알림 ID 와 알림 지정 = (일림의 식별자, 보여줄 알림)
+            startForeground(1, notification) // 임수로 알림 ID 와 알림 지정 = (일림의 식별자, 보여줄 알림) // Service 를 Foreground 로 만들어주는 함수
         }
     }
 
