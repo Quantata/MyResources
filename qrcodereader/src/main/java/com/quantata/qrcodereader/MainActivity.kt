@@ -1,7 +1,11 @@
 package com.quantata.qrcodereader
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -19,12 +23,47 @@ class MainActivity : AppCompatActivity() {
      */
     private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
 
+    // permission 관련
+    private val PERMISSIONS_REQUEST_CODE = 1 // 태그 기능을 하는 코드. 일종의 이름표. 나중에 요청한 결과를 받을때(onRequestPermissionResult 에서) 필요. 0 이상이 숫자이기만 하면 됨.
+    private val PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.CAMERA) // 카메라 권한 지정
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        startCamera()
+        if(!hasPermission(this)) {
+            // 권한이 없다면 권한을 요청합니다.
+            requestPermissions(PERMISSIONS_REQUIRED, PERMISSIONS_REQUEST_CODE)
+        } else {
+            startCamera()
+        }
+    }
+
+    // 권한 유무 확인
+    private fun hasPermission(context: Context) = PERMISSIONS_REQUIRED.all {
+        // ContextCompat 은 Resource 에서 값을 가져오거나 Permission 을 확인할 때 사용하는데 이때, SDK 버전을 고려하지 않아도 되도록 내부적으로 SDK 버전을 처리해둔 클래스.
+        ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        // requestPermission 의 인수로 넣은 PERMISSION_REQUEST_CODE 와 맞는지 확인
+        if(requestCode == PERMISSIONS_REQUEST_CODE) {
+            // 권한이 수락되면 startCamera() 를 호출하고 권한이 거부되면 Activity 종료
+            if(PackageManager.PERMISSION_GRANTED == grantResults.firstOrNull()) { // empty 이면 null, 아니면 array 의 첫번째 항목 가져오기
+                Toast.makeText(this@MainActivity, "권한 요청이 승인되었습니다.", Toast.LENGTH_SHORT).show()
+                startCamera()
+            } else {
+                Toast.makeText(this@MainActivity, "권한 요청이 거부되었습니다.", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
     }
 
     // 미리보기와 이미지 분석 시작

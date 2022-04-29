@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.quantata.qrcodereader">
 
+    <!-- <uses-feature> 를 통해 하드웨어 및 소프트웨어 기능 요구사항 명시 가능. 구글플레이에 앱을 올리면 카메라가 있는 기기에서만 다운로드 가능 -->
+    <uses-feature android:name="android.hardware.camera"/>
+
+    <!-- <uses-permission> 로 앱을 실행할 때 사용자가 승인해야 하는 권한 멷시 -->
+    <uses-permission android:name="android.permission.CAMERA"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
