@@ -7,11 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.google.common.util.concurrent.ListenableFuture
 import com.quantata.qrcodereader.databinding.ActivityMainBinding
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
 
@@ -66,6 +69,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Getting image analysis result
+    private fun getImageAnalysis() : ImageAnalysis {
+        val cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
+        val imageAnalysis = ImageAnalysis.Builder().build()
+
+
+        imageAnalysis.setAnalyzer(cameraExecutor,
+                // QRCodeAnalyzer 객체를생성 setAnalyzer() 함수의 인수로 넣어줌.
+                QRCodeAnalyzer(object : OnDetectListener { // object 를 통해 인터페이스 객체 만들어 주고, onDetect() 함수 오버라이드
+                    override fun onDetect(msg: String) {
+                        Toast.makeText(this@MainActivity, msg, Toast.LENGTH_SHORT).show()
+                    }
+                }))
+
+        return imageAnalysis
+    }
+
     // 미리보기와 이미지 분석 시작
     private fun startCamera() {
         cameraProviderFuture = ProcessCameraProvider.getInstance(this) // cameraProviderFuture 에 객체의 참조값을 할당
@@ -73,13 +93,15 @@ class MainActivity : AppCompatActivity() {
             val cameraProvider = cameraProviderFuture.get() // 카메라의 생명주기를 Activity 나 Fragment 와 같은 생명주기에 바인드해주는 ProcessCameraProvider 객체를 가져옵니다.
 
             val preview = getPreview() // 미리보기 객체를 가져옴.
+            val imageAnalysis = getImageAnalysis() // ImageAnalysis 객체 생성
             /*
              * 후면 카메라 : DEFAULT_BACK_CAMERA
              * 전면 카메라 : DEFAULT_FRONT_CAMERA
              */
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA // 후면 카메라 선택
 
-            cameraProvider.bindToLifecycle(this, cameraSelector, preview) // 미리보기, 이미지분석, 이미지 캡쳐 중 무엇을 사용할지 선택. 하나 이상 선택 가능. 일단 미리보기(preview) 만 삽입
+            // 미리보기, 이미지분석, 이미지 캡쳐 중 무엇을 사용할지 선택. 하나 이상 선택 가능. 일단 미리보기(preview) 만 삽입 -> 이미지 분석(imageAnalysis)도 삽입
+            cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis)
 
         }, ContextCompat.getMainExecutor(this)) // cameraProviderFuture Task 가 끝나면 실행된다.
 
