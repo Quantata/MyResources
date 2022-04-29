@@ -2,14 +2,11 @@ package com.quantata.qrcodereader
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.quantata.qrcodereader.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityMainBinding
-
+class ResultActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_result)
+
     }
 }
