@@ -30,3 +30,7 @@
 ## QR Code Reader
 - using CameraX in Jetpack
 - using Google ML Library
+  + ImageAnalysis
+- using Interface
+  + for communicating by creating listener
+
