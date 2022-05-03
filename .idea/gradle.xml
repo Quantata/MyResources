@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/qrcodereader" />
             <option value="$PROJECT_DIR$/simplemusicplayer" />
             <option value="$PROJECT_DIR$/stopwatch" />
+            <option value="$PROJECT_DIR$/todolist" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
