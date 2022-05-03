@@ -2,6 +2,7 @@ package com.quantata.qrcodereader
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -29,6 +30,15 @@ class MainActivity : AppCompatActivity() {
     // permission 관련
     private val PERMISSIONS_REQUEST_CODE = 1 // 태그 기능을 하는 코드. 일종의 이름표. 나중에 요청한 결과를 받을때(onRequestPermissionResult 에서) 필요. 0 이상이 숫자이기만 하면 됨.
     private val PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.CAMERA) // 카메라 권한 지정
+
+    // 이미지 분석이 실시간으로 계속해서 이루어지므로 onDetect() 함수가 여러번 호출될 수 있음. 이를 막기 위해 isDetected 생성
+    private var isDetected = false
+
+    // 사용자의 focus 가 MainActivity 로 돌아온다면 다시 QR 코드를 인식할 수 있도록 onResume() 함수를 오버라이드하여 isDetected 를 false 로 돌려줍니다.
+    override fun onResume() {
+        super.onResume()
+        isDetected = false
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +89,14 @@ class MainActivity : AppCompatActivity() {
                 // QRCodeAnalyzer 객체를생성 setAnalyzer() 함수의 인수로 넣어줌.
                 QRCodeAnalyzer(object : OnDetectListener { // object 를 통해 인터페이스 객체 만들어 주고, onDetect() 함수 오버라이드
                     override fun onDetect(msg: String) {
-                        Toast.makeText(this@MainActivity, msg, Toast.LENGTH_SHORT).show()
+                        if(!isDetected) { // 한번도 QR 코드가 인식되지 않았다면
+                            isDetected = true // 데이터가 감지되었으므로 ture 로 변경
+
+                            val intent = Intent(this@MainActivity, ResultActivity::class.java)
+                            intent.putExtra("msg", msg)
+                            startActivity(intent)
+                        }
+//                        Toast.makeText(this@MainActivity, msg, Toast.LENGTH_SHORT).show()
                     }
                 }))
 
