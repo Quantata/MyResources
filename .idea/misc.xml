@@ -16,6 +16,7 @@
         <entry key="stopwatch/src/main/res/layout/activity_main.xml" value="0.2625" />
         <entry key="todolist/src/main/res/layout/activity_add_todo.xml" value="0.2625" />
         <entry key="todolist/src/main/res/layout/activity_main.xml" value="0.2484375" />
+        <entry key="todolist/src/main/res/layout/item_todo.xml" value="0.4519927536231884" />
       </map>
     </option>
   </component>
