@@ -34,3 +34,14 @@
 - using Interface
   + for communicating by creating listener
 
+## To Do List
+- using Room
+  + Entity
+  + Dao
+  + Database
+- using Recyclerview
+  + adapter
+  + viewHolder
+- using viewBinding in Jetpack
+- listener
+  + about long click
