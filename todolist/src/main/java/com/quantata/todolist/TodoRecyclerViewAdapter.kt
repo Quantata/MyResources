@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.quantata.todolist.databinding.ItemTodoBinding
 import com.quantata.todolist.db.ToDoEntity
 
-class TodoRecyclerViewAdapter(private val todoList: ArrayList<ToDoEntity>)
+class TodoRecyclerViewAdapter(private val todoList: ArrayList<ToDoEntity>
+                            , private val listener : OnItemLongClickListener)
     : RecyclerView.Adapter<TodoRecyclerViewAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(binding : ItemTodoBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -45,6 +46,12 @@ class TodoRecyclerViewAdapter(private val todoList: ArrayList<ToDoEntity>)
         holder.tv_importance.text = todoData.importance.toString()
         // 할 일의 제목 변경
         holder.tv_title.text = todoData.title
+
+        // 할 일이 길게 클릭 되었을 때 리스너 함수 실행
+        holder.root.setOnLongClickListener {
+            listener.onLongClick(position)
+            false
+        }
     }
 
     // 데이터가 몇개인지 변환
