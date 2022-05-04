@@ -1,5 +1,6 @@
 package com.quantata.todolist
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.quantata.todolist.databinding.ActivityMainBinding
@@ -12,5 +13,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.btnAdd.setOnClickListener{
+            val intent = Intent(this, AddTodoActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
