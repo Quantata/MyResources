@@ -1,10 +1,10 @@
 # MyResources
 
-## Kotlin Learning(2022.04.19 update)
+## Kotlin Learning(2022.04.19 updated)
 ### basic
 - About Koltin syntax
 
-### fragment(2022.04.21 update)
+### fragment(2022.04.21 updated)
 - using Fragment
 - using viewBinding in Jetpack
   + warning : using viewBinding in Fragment
@@ -13,7 +13,7 @@
 - using constraintlayout
 - using guideline
 
-## Stop Watch(2022.04.22 upated)
+## Stop Watch(2022.04.22 updated)
 - using Thread
   + Main Thread : using runOnUiThread
   + Backgroud Thread
@@ -21,20 +21,20 @@
   + chain
 - using dataBinding in Jetpack
 
-## Simple Music Player
+## Simple Music Player(2022.04.22 updated)
 - using MediaPlayer API
 - using Service
   + Foreground Service
   + notification
 
-## QR Code Reader
+## QR Code Reader(2022.05.03 updated)
 - using CameraX in Jetpack
 - using Google ML Library
   + ImageAnalysis
 - using Interface
   + for communicating by creating listener
 
-## To Do List
+## To Do List(2022.05.04 updated)
 - using Room
   + Entity
   + Dao
